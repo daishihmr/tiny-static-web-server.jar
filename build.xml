@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project default="create_run_jar" name="Create Runnable Jar for Project simple-web-server with Jar-in-Jar Loader">
+    <!--this file was created by Eclipse Runnable JAR Export Wizard-->
+    <!--ANT 1.7 is required                                        -->
+    <target name="create_run_jar">
+        <jar destfile="build/simple-web-server.jar">
+            <manifest>
+                <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>
+                <attribute name="Rsrc-Main-Class" value="web.Server"/>
+                <attribute name="Class-Path" value="."/>
+                <attribute name="Rsrc-Class-Path" value="./ javax.servlet-3.0.0.v201112011016.jar jetty-continuation-8.1.2.v20120308.jar jetty-http-8.1.2.v20120308.jar jetty-io-8.1.2.v20120308.jar jetty-server-8.1.2.v20120308.jar jetty-servlet-8.1.2.v20120308.jar jetty-util-8.1.2.v20120308.jar"/>
+            </manifest>
+            <zipfileset src="jar-in-jar-loader.zip"/>
+            <fileset dir="bin"/>
+            <zipfileset dir="lib" includes="javax.servlet-3.0.0.v201112011016.jar"/>
+            <zipfileset dir="lib" includes="jetty-continuation-8.1.2.v20120308.jar"/>
+            <zipfileset dir="lib" includes="jetty-http-8.1.2.v20120308.jar"/>
+            <zipfileset dir="lib" includes="jetty-io-8.1.2.v20120308.jar"/>
+            <zipfileset dir="lib" includes="jetty-server-8.1.2.v20120308.jar"/>
+            <zipfileset dir="lib" includes="jetty-servlet-8.1.2.v20120308.jar"/>
+            <zipfileset dir="lib" includes="jetty-util-8.1.2.v20120308.jar"/>
+        </jar>
+    </target>
+</project>
