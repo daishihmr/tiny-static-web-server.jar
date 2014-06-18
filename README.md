@@ -24,7 +24,9 @@ Java1.6以上。
   または
   以下のコマンドを実行する
 
-    java -jar simple-web-server.jar [-p <port>] [-d <docRoot>] [-o]
+~~~
+# java -jar simple-web-server.jar [-p <port>] [-d <docRoot>] [-o]
+~~~
 
 2. 終了方法
 
