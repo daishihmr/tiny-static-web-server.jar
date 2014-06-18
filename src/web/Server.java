@@ -7,6 +7,7 @@ import java.awt.GraphicsEnvironment;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 import java.io.IOException;
 import java.net.ConnectException;
 import java.net.Socket;
@@ -18,6 +19,7 @@ import javax.servlet.ServletException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.swing.JButton;
+import javax.swing.JLabel;
 import javax.swing.JFrame;
 import javax.swing.UIManager;
 import javax.swing.UIManager.LookAndFeelInfo;
@@ -100,11 +102,19 @@ public class Server {
             }
         }
 
-        final JFrame frame = new JFrame(bundle.getString("app.name"));
+        String labelText = new File(".").getCanonicalPath() + " : " + port;
+        if (labelText.length() > 38) {
+            labelText = "..." + labelText.substring(labelText.length() - 38);
+        }
+        // final JFrame frame = new JFrame(bundle.getString("app.name"));
+        final JFrame frame = new JFrame(labelText);
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-        frame.setSize(200, 80);
+        frame.setSize(400, 80);
         // frame.setAlwaysOnTop(true);
         frame.setLayout(new FlowLayout());
+        frame.setResizable(false);
+        frame.setVisible(true);
+
         final JButton stopButton = new JButton(
                 bundle.getString("stop.button.label"));
         stopButton.addActionListener(new ActionListener() {
@@ -113,9 +123,8 @@ public class Server {
                 System.exit(0);
             }
         });
-        frame.setResizable(false);
         frame.add(stopButton);
-        frame.setVisible(true);
+
         frame.setIconImage(ImageIO.read(getClass().getResource("/icon.png")));
 
         // move frame to left-top
@@ -124,7 +133,7 @@ public class Server {
         final GraphicsDevice device = env.getDefaultScreenDevice();
         final Rectangle screenRect = device.getDefaultConfiguration()
                 .getBounds();
-        frame.setLocation(screenRect.width - 200, 0);
+        frame.setLocation(screenRect.width - frame.getWidth(), 0);
 
         // start browser
         if (browse) {
