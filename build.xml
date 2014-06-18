@@ -2,7 +2,22 @@
 <project default="create_run_jar" name="Create Runnable Jar for Project simple-web-server with Jar-in-Jar Loader">
     <!--this file was created by Eclipse Runnable JAR Export Wizard-->
     <!--ANT 1.7 is required                                        -->
-    <target name="create_run_jar">
+
+    <target name="clean">
+        <delete dir="bin" />
+        <delete dir="build" />
+    </target>
+
+    <target name="compile" depends="clean">
+        <mkdir dir="bin" />
+        <javac srcdir="src" destdir="bin" classpath="lib/javax.servlet-3.0.0.v201112011016.jar;lib/jetty-continuation-8.1.2.v20120308.jar;lib/jetty-http-8.1.2.v20120308.jar;lib/jetty-io-8.1.2.v20120308.jar;lib/jetty-server-8.1.2.v20120308.jar;lib/jetty-servlet-8.1.2.v20120308.jar;lib/jetty-util-8.1.2.v20120308.jar" debug="true" />
+        <copy file="src/icon.png" todir="bin" />
+        <copy file="src/strings.properties" todir="bin" />
+        <copy file="src/strings_ja.properties" todir="bin" />
+    </target>
+
+    <target name="create_run_jar" depends="compile">
+        <mkdir dir="build" />
         <jar destfile="build/simple-web-server.jar">
             <manifest>
                 <attribute name="Main-Class" value="org.eclipse.jdt.internal.jarinjarloader.JarRsrcLoader"/>

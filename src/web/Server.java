@@ -30,7 +30,8 @@ public class Server {
     public static void main(String[] args) throws Exception {
         String docRoot = ".";
         String port = scanPort();
-        boolean browse = false;
+        // String port = "8081";
+        boolean browse = true;
 
         for (int i = 0; i < args.length; i++) {
             if (args[i].equals("--docRoot") || args[i].equals("-d")) {
@@ -46,7 +47,7 @@ public class Server {
                     || args[i].equals("-h")) {
 
                 System.out
-                        .println("java -jar simple-web-server.jar [-d <docRoot>] [-p <port>] [-b] [-?]");
+                        .println("java -jar simple-web-server.jar [-d <docRoot>] [-p <port>] [-o] [-?]");
 
                 return;
             }
@@ -56,13 +57,25 @@ public class Server {
     }
 
     private static String scanPort() throws Exception {
-        int p = 49152;
+        System.out.println("scan port...");
+
+        int p = 8080;
         for (; p < 65536; p++) {
+            System.out.print("\t" + p + "\t...");
+
+            Socket socket = null;
             try {
-                final Socket socket = new Socket("localhost", p);
-                socket.close();
+                socket = new Socket("localhost", p);
+                System.out.println("used.");
             } catch (ConnectException e) {
+                System.out.println("OK.");
                 break;
+            } finally {
+                if (socket != null) {
+                    try {
+                        socket.close();
+                    } catch (Exception e) {}
+                }
             }
         }
         if (p == 65536) {
@@ -90,7 +103,7 @@ public class Server {
         final JFrame frame = new JFrame(bundle.getString("app.name"));
         frame.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         frame.setSize(200, 80);
-        frame.setAlwaysOnTop(true);
+        // frame.setAlwaysOnTop(true);
         frame.setLayout(new FlowLayout());
         final JButton stopButton = new JButton(
                 bundle.getString("stop.button.label"));
